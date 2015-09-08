@@ -50,13 +50,14 @@ namespace Trainer
             };
             var random = new RandomWeightInitializer(new Random());
             INeuralNetworkFactory factory = NeuralNetworkFactory.GetInstance(SomaFactory.GetInstance(networkConfig.SummationFunction), AxonFactory.GetInstance(networkConfig.ActivationFunction), SynapseFactory.GetInstance(new RandomWeightInitializer(new Random())), SynapseFactory.GetInstance(new ConstantWeightInitializer(1.0)), random);
-            IBreeder breeder = new Breeder(factory, random);
-            IMutator mutator = new Mutator(factory, random, mutationSettings);
-            IEvalWorkingSet history = new EvalWorkingSet(50);
+            IBreeder breeder = BreederFactory.GetInstance(factory, random).Create();
+            IMutator mutator = MutatorFactory.GetInstance(factory, random).Create(mutationSettings);
+            IEvalWorkingSet history = EvalWorkingSetFactory.GetInstance().Create(50);
             IEvaluatableFactory evaluatableFactory = new GameEvaluationFactory();
 
-            GeneticAlgorithm evolver = new GeneticAlgorithm(networkConfig, generationSettings, evolutionSettings, factory, breeder, mutator, history, evaluatableFactory);
-            evolver.runEpoch();
+            var GAFactory = GeneticAlgorithmFactory.GetInstance(evaluatableFactory);
+            IGeneticAlgorithm evolver = GAFactory.Create(networkConfig, generationSettings, evolutionSettings, factory, breeder, mutator, history, evaluatableFactory);
+            evolver.RunSimulation();
         }
     }
 }
