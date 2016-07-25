@@ -49,7 +49,7 @@ namespace Trainer
                 MutateSynapseWeights = true
             };
             var random = new RandomWeightInitializer(new Random());
-            INeuralNetworkFactory factory = NeuralNetworkFactory.GetInstance(SomaFactory.GetInstance(networkConfig.SummationFunction), AxonFactory.GetInstance(networkConfig.ActivationFunction), SynapseFactory.GetInstance(new RandomWeightInitializer(new Random())), SynapseFactory.GetInstance(new ConstantWeightInitializer(1.0)), random);
+            INeuralNetworkFactory factory = NeuralNetworkFactory.GetInstance(SomaFactory.GetInstance(networkConfig.SummationFunction), AxonFactory.GetInstance(networkConfig.ActivationFunction), SynapseFactory.GetInstance(new RandomWeightInitializer(new Random()), AxonFactory.GetInstance(networkConfig.ActivationFunction)), SynapseFactory.GetInstance(new ConstantWeightInitializer(1.0), AxonFactory.GetInstance(new IdentityActivationFunction())), random);
             IBreeder breeder = BreederFactory.GetInstance(factory, random).Create();
             IMutator mutator = MutatorFactory.GetInstance(factory, random).Create(mutationSettings);
             IEvalWorkingSet history = EvalWorkingSetFactory.GetInstance().Create(50);
