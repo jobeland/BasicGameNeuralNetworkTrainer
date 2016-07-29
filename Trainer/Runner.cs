@@ -37,7 +37,8 @@ namespace Trainer
                 NormalMutationRate = 0.05,
                 HighMutationRate = 0.5,
                 GenerationsPerEpoch = 10,
-                NumEpochs = 1000
+                NumEpochs = 1000,
+                NumTopEvalsToReport = 10
             };
             MutationConfigurationSettings mutationSettings = new MutationConfigurationSettings
             {
@@ -56,7 +57,7 @@ namespace Trainer
             IEvaluatableFactory evaluatableFactory = new GameEvaluationFactory();
 
             var GAFactory = GeneticAlgorithmFactory.GetInstance(evaluatableFactory);
-            IGeneticAlgorithm evolver = GAFactory.Create(networkConfig, generationSettings, evolutionSettings, factory, breeder, mutator, history, evaluatableFactory);
+            IGeneticAlgorithm evolver = GAFactory.Create(networkConfig, generationSettings, evolutionSettings, factory, breeder, mutator, history, evaluatableFactory, null);
             evolver.RunSimulation();
         }
     }
