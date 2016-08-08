@@ -43,8 +43,8 @@
       <HintPath>..\packages\JoBeland.Logging.1.0.0.0\lib\net45\Logging.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="NeuralNetwork, Version=3.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\NeuralNetwork.3.1.0\lib\net451\NeuralNetwork.dll</HintPath>
+    <Reference Include="NeuralNetwork, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NeuralNetwork.4.0.0\lib\net451\NeuralNetwork.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="NeuralNetwork.GeneticAlgorithm, Version=2.2.0.0, Culture=neutral, processorArchitecture=MSIL">
