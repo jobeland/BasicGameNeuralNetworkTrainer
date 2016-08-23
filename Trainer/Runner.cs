@@ -11,6 +11,8 @@ using NeuralNetwork.GeneticAlgorithm;
 using NeuralNetwork.GeneticAlgorithm.Evaluatable;
 using NeuralNetwork.GeneticAlgorithm.Evolution;
 using NeuralNetwork.GeneticAlgorithm.Utils;
+using StorageAPI;
+using StorageAPI.Proxies.NodeJs;
 
 namespace Trainer
 {
@@ -30,7 +32,7 @@ namespace Trainer
             GenerationConfigurationSettings generationSettings = new GenerationConfigurationSettings
             {
                 UseMultithreading = true,
-                GenerationPopulation = 1000
+                GenerationPopulation = 500
             };
             EvolutionConfigurationSettings evolutionSettings = new EvolutionConfigurationSettings
             {
@@ -56,8 +58,11 @@ namespace Trainer
             IEvalWorkingSet history = EvalWorkingSetFactory.GetInstance().Create(50);
             IEvaluatableFactory evaluatableFactory = new GameEvaluationFactory();
 
+            IStorageProxy proxy = new NodeJSProxy(1, "http://localhost:3000", "123456789");
+            IEpochAction action = new BestPerformerUpdater(proxy);
+
             var GAFactory = GeneticAlgorithmFactory.GetInstance(evaluatableFactory);
-            IGeneticAlgorithm evolver = GAFactory.Create(networkConfig, generationSettings, evolutionSettings, factory, breeder, mutator, history, evaluatableFactory, null);
+            IGeneticAlgorithm evolver = GAFactory.Create(networkConfig, generationSettings, evolutionSettings, factory, breeder, mutator, history, evaluatableFactory, action);
             evolver.RunSimulation();
         }
     }
